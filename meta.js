@@ -100,5 +100,16 @@ module.exports = {
     "test/e2e/**/*": "e2e",
     "src/router/**/*": "router"
   },
-  "completeMessage": "To get started:\n\n  {{^inPlace}}cd {{destDirName}}\n  {{/inPlace}}npm install\n  npm run dev\n\nDocumentation can be found at https://vuejs-templates.github.io/webpack"
+//  "completeMessage": "To get started:\n\n  {{^inPlace}}cd {{destDirName}}\n  {{/inPlace}}npm install\n  npm run dev\n\nDocumentation can be found at https://vuejs-templates.github.io/webpack",
+  "completeMessage": `
+  To get started:
+  {{^inPlace}}cd {{destDirName}}
+  {{/inPlace}}npm install
+  npm run dev
+  // options
+  rp = random port
+  p30001 = specific port
+  ip = 127.0.0.1 vs localhost
+  npm run dev ip rp
+  Documentation can be found at https://vuejs-templates.github.io/webpack"
 };
