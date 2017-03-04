@@ -13,8 +13,6 @@ import store from './store'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 
 Vue.config.productionTip = false{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 
-
-
 Vue.mixin({
   filters: {
     uppercase(val) {
@@ -25,11 +23,9 @@ Vue.mixin({
     }
   },
   created: function () {
-    console.log('**** mixin creates',this)
+    console.log('**** mixin creates', this)
   }
 })
-
-
 
 /* eslint-disable no-new */
 new Vue({
