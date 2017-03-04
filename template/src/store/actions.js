@@ -3,4 +3,4 @@ export const something = ({
   state
   }, payload) => {
     commit('SET_SOMETHING', payload)
-  };
+  }

@@ -1,9 +1,7 @@
-import {
-  set
-} from 'vue'
-
 export default {
   SET_SOMETHING(state, payload) {
-    state.something = payload;
+    state.something = payload
+    state.history.push('something') // ?
+
   }
 }
