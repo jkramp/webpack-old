@@ -25,7 +25,7 @@ function definedPort(){
   }
   let port = process.argv.filter(item=>item.trim().match(/^p/));
   if (port.length){
-    return port[0].substring(2)
+    return port[0].substring(1)
   }
   return process.env.PORT || config.dev.port
 }
