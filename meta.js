@@ -1,4 +1,3 @@
-'use strict'
 module.exports = {
   "helpers": {
     "if_or": function (v1, v2, options) {
@@ -112,5 +111,5 @@ module.exports = {
   p30001 = specific port
   ip = 127.0.0.1 vs localhost
   npm run dev ip rp
-  Documentation can be found at https://vuejs-templates.github.io/webpack"
+  Documentation can be found at https://vuejs-templates.github.io/webpack`
 };
