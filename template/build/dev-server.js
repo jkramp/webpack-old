@@ -23,9 +23,9 @@ function definedPort(){
   if (process.argv.indexOf('rp') > -1 ){
     return randomPort(3000, 4000);
   }
-  let port = process.argv.filter(item=>item.match(/^-p/));
-  if (port){
-    return port.substring(2)
+  let port = process.argv.filter(item=>item.trim().match(/^p/));
+  if (port.length){
+    return port[0].substring(2)
   }
   return process.env.PORT || config.dev.port
 }
