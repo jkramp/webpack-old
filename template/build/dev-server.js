@@ -1,3 +1,4 @@
+'use strict'
 require('./check-versions')()
 
 var config = require('../config')
@@ -18,8 +19,18 @@ function randomPort(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+function definedPort(){
+  if (process.argv.indexOf('rp') > -1 ){
+    return randomPort(3000, 4000);
+  }
+  let port = process.argv.filter(item=>item.match(/^-p/));
+  if (port){
+    return port.substring(2)
+  }
+  return process.env.PORT || config.dev.port
+}
 // default port where dev server listens for incoming traffic
-var port = process.argv.indexOf('rp') ? randomPort(3000, 4000) : process.argv[2] ? process.argv[2] : (process.env.PORT || config.dev.port)
+var port = definedPort();
 // automatically open browser, if not set will be false
 var autoOpenBrowser = !!config.dev.autoOpenBrowser
 // Define HTTP proxies to your custom API backend
