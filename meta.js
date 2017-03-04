@@ -45,7 +45,7 @@ module.exports = {
       "type": "confirm",
       "message": "Install vue-router?"
     },
-    "veux": {
+    "vuex": {
       "type": "confirm",
       "message": "Install vuex?"
     },
