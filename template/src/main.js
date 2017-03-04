@@ -22,11 +22,11 @@ Vue.mixin({
     },
     lowercase(val) {
       return val.toLowerCase()
-    },
+    }
   },
   created: function () {
     console.log('**** mixin creates',this)
-  },
+  }
 })
 
 
