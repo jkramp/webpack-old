@@ -15,6 +15,9 @@ Vue.config.productionTip = false{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 
 Vue.mixin({
   filters: {
+    json(val) {
+      return JSON.stringify(val, null, 4)
+    },
     uppercase(val) {
       return val.toUpperCase()
     },
@@ -26,6 +29,56 @@ Vue.mixin({
     console.log('**** mixin creates', this)
   }
 })
+
+Vue.directive('focus', {
+  // When the bound element is inserted into the DOM...
+  bind(el, data){
+    el.onkeyup = function(e){
+      if (e.keyCode === 13 && !e.shiftKey && !e.ctrlKey && !e.altKey){
+        let els = document.querySelectorAll('input, textarea, button, checkbox, radio')
+        let arr = Array.prototype.slice.call(els)
+        let next = arr.indexOf(el) + 1
+        if (next < arr.length){
+          arr[next].focus()
+        }
+      }
+    }
+  },
+  inserted: function(el, data) {
+    if (el && (typeof data.value === 'undefined' || data.value === true)){
+      el.focus()
+    }
+  }
+})
+
+Vue.directive('scrollBottom', {
+  componentUpdated(el, data) {
+    el.scrollTop = el.scrollHeight;
+  }
+})
+
+Vue.directive('enterDown', {
+  bind(el, data){
+    // we need to hack the on input because enter on android does not always work
+    function trackEnter(e){
+      let charKeyCode = event.keyCode || event.which || e.target.value.substr(-1);
+      if ((charKeyCode !== 13 && charKeyCode !== '\n') || (event.shiftKey || event.ctrlKey || event.altKey)){
+        data.value(null, e);
+        return;
+      }
+      e.preventDefault()
+      data.value(e);
+    }
+    if (/(android)/i.test(navigator.userAgent)){
+      el.oninput = trackEnter
+    } else {
+      el.onkeydown = trackEnter
+    }
+    //     el.onkeyup = trackEnter
+  }
+})
+
+
 
 /* eslint-disable no-new */
 new Vue({

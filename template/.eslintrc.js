@@ -38,6 +38,7 @@ module.exports = {
      'indent': 0,
      'no-extra-semi': 0,
      'no-multiple-empty-lines':0,
+     'space-before-blocks':0,
      //end Custom rules
     {{#if_eq lintConfig "standard"}}
     // allow paren-less arrow functions
