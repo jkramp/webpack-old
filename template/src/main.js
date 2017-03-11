@@ -16,7 +16,7 @@ Vue.config.productionTip = false{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 Vue.mixin({
   filters: {
     json(val) {
-      return JSON.stringify(val, null, 4)
+      return JSON.stringify(val, null, 2)
     },
     uppercase(val) {
       return val.toUpperCase()
@@ -27,6 +27,9 @@ Vue.mixin({
   },
   created: function () {
     console.log('**** mixin creates', this)
+  },
+  updated: function () {
+    console.log('updated',this)
   }
 })
 
@@ -51,11 +54,40 @@ Vue.directive('focus', {
   }
 })
 
-Vue.directive('scrollBottom', {
-  componentUpdated(el, data) {
-    el.scrollTop = el.scrollHeight;
+Vue.directive('attachCss', {
+  inserted: function (el, data) {
+    let style = document.createElement('style')
+    style.type = 'text/css'
+    style.id = ('css_' + Math.random()).replace('.', '')
+    el._cssScriptId = style.id
+    style.appendChild(document.createTextNode(data.value))
+    el.appendChild(style)
+  },
+  update: function(el, data){
+    let style = document.getElementById(el._cssScriptId)
+    style.innerHTML = data.value
   }
 })
+
+Vue.directive('scrollBottom', {
+  componentUpdated(el, data) {
+    el.scrollTop = el.scrollHeight
+  }
+})
+
+Vue.directive('autoHeight', {
+  inserted: function (el, data) {
+    el.style.height = data.value || `2.5rem`;
+  },
+  componentUpdated(el, data) {
+    if (el.value) {
+      el.style.height = `${el.scrollHeight}px`;
+    } else {
+      el.style.height = data.value || `2.5rem`;
+    }
+  }
+})
+
 
 Vue.directive('enterDown', {
   bind(el, data){
@@ -63,22 +95,38 @@ Vue.directive('enterDown', {
     function trackEnter(e){
       let charKeyCode = event.keyCode || event.which || e.target.value.substr(-1);
       if ((charKeyCode !== 13 && charKeyCode !== '\n') || (event.shiftKey || event.ctrlKey || event.altKey)){
-        data.value(null, e);
-        return;
+        data.value(null, e)
+        return
       }
       e.preventDefault()
-      data.value(e);
+      data.value(e)
     }
     if (/(android)/i.test(navigator.userAgent)){
       el.oninput = trackEnter
     } else {
       el.onkeydown = trackEnter
     }
-    //     el.onkeyup = trackEnter
   }
 })
 
-
+Vue.directive('fileDrop', {
+  inserted: function (el, data) {
+    'drag dragstart dragend dragover dragenter dragleave drop'
+      .split(' ')
+      .forEach(e => el.addEventListener(e, e => {
+        e.preventDefault()
+        e.stopPropagation()
+        el.classList.add('draggingFile')
+        if (e.type === 'drop'){
+          el.classList.remove('draggingFile')
+          let droppedFiles = e.dataTransfer.files;
+          if (data.value){
+            data.value(droppedFiles)
+          }
+        }
+      }, false))
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
