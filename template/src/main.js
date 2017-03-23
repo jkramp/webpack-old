@@ -2,16 +2,16 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 {{/if_eq}}
-import Vue from 'vue'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-import App from './App'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
+import Vue from 'vue'{{#if_eq lintConfig "airbnb"}}{{/if_eq}}
+import App from './App'{{#if_eq lintConfig "airbnb"}}{{/if_eq}}
 {{#router}}
-import router from './router'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
+import router from './router'{{#if_eq lintConfig "airbnb"}}{{/if_eq}}
 {{/router}}
 {{#vuex}}
-import store from './store'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
+import store from './store'{{#if_eq lintConfig "airbnb"}}{{/if_eq}}
 {{/vuex}}
 
-Vue.config.productionTip = false{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
+Vue.config.productionTip = false{{#if_eq lintConfig "airbnb"}}{{/if_eq}}
 
 Vue.mixin({
   filters: {
@@ -29,7 +29,7 @@ Vue.mixin({
     console.log('**** mixin creates', this)
   },
   updated: function () {
-    console.log('updated',this)
+    console.log('updated', this)
   }
 })
 
@@ -77,13 +77,13 @@ Vue.directive('scrollBottom', {
 
 Vue.directive('autoHeight', {
   inserted: function (el, data) {
-    el.style.height = data.value || `2.5rem`;
+    el.style.height = data.value || `2.5rem`
   },
   componentUpdated(el, data) {
     if (el.value) {
-      el.style.height = `${el.scrollHeight}px`;
+      el.style.height = `${el.scrollHeight}px`
     } else {
-      el.style.height = data.value || `2.5rem`;
+      el.style.height = data.value || `2.5rem`
     }
   }
 })
@@ -93,7 +93,7 @@ Vue.directive('enterDown', {
   bind(el, data){
     // we need to hack the on input because enter on android does not always work
     function trackEnter(e){
-      let charKeyCode = event.keyCode || event.which || e.target.value.substr(-1);
+      let charKeyCode = event.keyCode || event.which || e.target.value.substr(-1)
       if ((charKeyCode !== 13 && charKeyCode !== '\n') || (event.shiftKey || event.ctrlKey || event.altKey)){
         data.value(null, e)
         return
@@ -119,7 +119,7 @@ Vue.directive('fileDrop', {
         el.classList.add('draggingFile')
         if (e.type === 'drop'){
           el.classList.remove('draggingFile')
-          let droppedFiles = e.dataTransfer.files;
+          let droppedFiles = e.dataTransfer.files
           if (data.value){
             data.value(droppedFiles)
           }
@@ -144,4 +144,4 @@ new Vue({
   template: '<App/>',
   components: { App }{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
   {{/if_eq}}
-}){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
+}){{#if_eq lintConfig "airbnb"}}{{/if_eq}}
